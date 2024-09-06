@@ -1,0 +1,113 @@
+import random
+
+stages = [
+    """
+      +---+
+      |   |
+          |
+          |
+          |
+          |
+    =========
+    """,
+    """
+      +---+
+      |   |
+      O   |
+          |
+          |
+          |
+    =========
+    """,
+    """
+      +---+
+      |   |
+      O   |
+      |   |
+          |
+          |
+    =========
+    """,
+    """
+      +---+
+      |   |
+      O   |
+     /|   |
+          |
+          |
+    =========
+    """,
+    """
+      +---+
+      |   |
+      O   |
+     /|\\  |
+          |
+          |
+    =========
+    """,
+    """
+      +---+
+      |   |
+      O   |
+     /|\\  |
+     /    |
+          |
+    =========
+    """,
+    """
+      +---+
+      |   |
+      O   |
+     /|\\  |
+     / \\  |
+          |
+    =========
+    """
+]
+
+word_list = ["aardvark", "baboon", "camel"]
+lives = 6
+chosen_word = random.choice(word_list)
+
+# Setting the initial state of the display (placeholders for letters)
+display = "_" * len(chosen_word)
+
+game_over = False
+correct_letters = []
+
+while not game_over:
+    guess = input("Guess a letter: ").lower()
+
+    # Check if the letter was already guessed
+    if guess in correct_letters:
+        print(f"You've already guessed {guess}")
+        continue
+
+    # Update the display (replacing placeholders with the correct letters)
+    new_display = ""
+    for i in range(len(chosen_word)):
+        if chosen_word[i] == guess:
+            new_display += guess
+        else:
+            new_display += display[i]
+
+    # Update the display for the next iteration
+    display = new_display
+    print(display)
+
+    # If the guessed letter is not in the word, reduce lives
+    if guess not in chosen_word:
+        lives -= 1
+        if lives == 0:
+            game_over = True
+            print("You lost!")
+            print(f"The word was: {chosen_word}")
+
+    # Check if the player has guessed the entire word
+    if "_" not in display:
+        game_over = True
+        print("You win!")
+
+    # Display the corresponding hangman stage
+    print(stages[6 - lives])
